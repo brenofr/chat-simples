@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CHAT B1</title>
+    <link rel="stylesheet" href="/public/css/main.css">
+
+    <style>
+      * { 
+          margin: 0; 
+          padding: 0;
+          box-sizing: border-box; 
+      }
+
+      #bem-vindos{
+        padding: 4em;
+        color: #fefefe;
+      }
+
+      body { 
+          background: #3498db;
+          font: 15pt Helvetica, sans-serif, Arial;
+          color: #fefefe;
+      }
+
+      form { background: #303030; padding: 10px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(105, 110, 160); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 20px 30px; }
+      #messages li:nth-child(odd) { }
+    </style>
+  </head>
+    <body>
+      <div id="bem-vindos">
+        <h1>Bem vindos ao Chat</h1>
+        <p>Desenvolvido por, instagram: <a href="http://instagram.com/breno.io">breno.io</a> / twitter: <a href="http://twitter.com/breno_io">breno_io</a>
+      </div>
+      <ul id="messages"></ul>
+
+      <form action="">
+        <input id="m" autocomplete="off" /><button>ENVIAR</button>
+      </form>
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+      <script>
+      // lado do cliente
+      // set uma variável global
+          var socket = io();
+
+          $(function () {
+              var socket = io();
+              $('form').submit(function(){
+              socket.emit('chat message', $('#m').val());
+              $('#m').val('');
+              return false;
+          });
+          socket.on('chat message', function(msg){
+              $('#messages').append($('<li>').text(msg));
+              });
+          });
+
+
+      </script>
+    </body>
+</html>
